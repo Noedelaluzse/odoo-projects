@@ -1,0 +1,21 @@
+<odoo>
+  <record id="grades_evaluation_tree_view" model="ir.ui.view">
+    <field name="name">grades.evaluation.tree.view</field>
+    <field name="model">grades.evaluation</field>
+    <field name="arch" type="xml"> 
+      <list string="Evaluation">
+        <field name="name" />
+        <field name="date" />
+        <field name="course_id" />
+        <field name="observations" />
+      </list>
+    </field>
+  </record>
+
+  <record id="grades_evaluation_action" model="ir.actions.act_window">
+    <field name="name">Evaluation</field>
+    <field name="res_model">grades.evaluation</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

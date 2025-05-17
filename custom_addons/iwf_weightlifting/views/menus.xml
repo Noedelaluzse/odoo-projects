@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menú raíz -->
+    <menuitem 
+      id="menu_iwf_root" 
+      name="Halterofilia" 
+      sequence="10"/>
+
+    <!-- Menú: Atletas -->
+    <menuitem 
+        id="menu_iwf_athlete_root" 
+        name="Atletas" 
+        parent="menu_iwf_root" 
+        sequence="10"/>
+
+    <menuitem 
+        id="menu_iwf_athlete_list"
+        name="Lista de Atletas" 
+        parent="menu_iwf_athlete_root" 
+        action="action_iwf_athlete"/>
+
+    <!-- Menú: Eventos -->
+    <menuitem 
+        id="menu_iwf_event_root" 
+        name="Eventos" 
+        parent="menu_iwf_root" 
+        sequence="20"/>
+
+    <menuitem 
+        id="menu_iwf_competition_list" 
+        name="Competencias" 
+        parent="menu_iwf_event_root" 
+        action="action_iwf_competition"/>
+
+    <menuitem 
+        id="menu_iwf_category_list" 
+        name="Categorías de Competencia" 
+        parent="menu_iwf_event_root" 
+        action="action_iwf_competition_category"/>
+
+    <menuitem 
+        id="menu_iwf_participation_list" 
+        name="Participaciones" 
+        parent="menu_iwf_event_root" 
+        action="action_iwf_participation"/>
+
+    <!-- Menú: Resultados -->
+    <menuitem 
+        id="menu_iwf_results_root" 
+        name="Resultados" 
+        parent="menu_iwf_root" 
+        sequence="30"/>
+    <menuitem 
+        id="menu_iwf_result_list" 
+        name="Resultados Generales" 
+        parent="menu_iwf_results_root" 
+        action="action_iwf_result"/>
+
+    <!-- Menú: Control Técnico -->
+    <menuitem 
+        id="menu_iwf_control_root" 
+        name="Control y Revisión" 
+        parent="menu_iwf_root" 
+        sequence="40"/>
+    <menuitem 
+        id="menu_iwf_lift_attempt_list" 
+        name="Intentos" 
+        parent="menu_iwf_control_root" 
+        action="action_iwf_lift_attempt"/>
+    <!-- <menuitem 
+        id="menu_iwf_penalty_list" 
+        name="Penalizaciones" 
+        parent="menu_iwf_control_root" 
+        action="action_iwf_penalty"/>
+    <menuitem 
+        id="menu_iwf_equipment_check_list" 
+        name="Chequeo de Equipamiento" 
+        parent="menu_iwf_control_root" 
+        action="action_iwf_equipment_check"/>
+    <menuitem 
+        id="menu_iwf_antidoping_test_list" 
+        name="Pruebas Antidopaje" 
+        parent="menu_iwf_control_root" 
+        action="action_iwf_antidoping_test"/> -->
+    
+    <!-- Menú: Configuración (Solo organizadores) -->
+    <menuitem 
+        id="menu_iwf_config_root" 
+        name="Configuración" 
+        parent="menu_iwf_root" 
+        sequence="50"
+        groups="iwf_weightlifting.group_iwf_organizer"
+    />
+    <menuitem 
+        id="menu_iwf_rule_set_list" 
+        name="Reglas (Rule Sets)" 
+        parent="menu_iwf_config_root" 
+        action="action_iwf_rule_set"/>
+    <menuitem 
+        id="menu_iwf_age_group_list" 
+        name="Grupos de Edad" 
+        parent="menu_iwf_config_root" 
+        action="action_iwf_age_group"/>
+    <menuitem 
+        id="menu_iwf_weight_category_list" 
+        name="Categorías de Peso" 
+        parent="menu_iwf_config_root" 
+        action="action_iwf_weight_category"/>
+
+</odoo>

@@ -1,0 +1,10 @@
+odoo/
+.env
+data/
+
+/odoo
+**/__pycache__/
+**/odoo/
+.DS_Store
+.vscode/
+.idea/

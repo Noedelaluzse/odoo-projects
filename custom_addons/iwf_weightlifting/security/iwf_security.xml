@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Categoría personalizada para agrupar roles del módulo -->
+  <record id="module_category_halterofilia" model="ir.module.category">
+    <field name="name">Halterofilia</field>
+    <field name="description">Gestión de competencias de halterofilia</field>
+    <field name="sequence">10</field>
+  </record>
+
+  <!-- Grupo: Juez -->
+  <record id="group_iwf_judge" model="res.groups">
+    <field name="name">Juez</field>
+    <field name="category_id" ref="module_category_halterofilia"/>
+  </record>
+
+  <!-- Grupo: Organizador -->
+  <record id="group_iwf_organizer" model="res.groups">
+    <field name="name">Organizador</field>
+    <field name="category_id" ref="module_category_halterofilia"/>
+  </record>
+
+  <!-- Grupo: Técnico de Club -->
+  <record id="group_iwf_technician" model="res.groups">
+    <field name="name">Técnico de Club</field>
+    <field name="category_id" ref="module_category_halterofilia"/>
+  </record>
+
+  <!-- Grupo: Visor Público -->
+  <record id="group_iwf_viewer" model="res.groups">
+    <field name="name">Visor Público</field>
+    <field name="category_id" ref="module_category_halterofilia"/>
+  </record>
+
+</odoo>

@@ -1,0 +1,81 @@
+<odoo>
+  <record id="grades_course_action" model="ir.actions.act_window">
+    <field name="name">Courses</field>
+    <field name="res_model">grades.course</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+  <record id="grades_course_tree_view" model="ir.ui.view">
+    <field name="name">grades.course.list</field>
+    <field name="model">grades.course</field>
+    <field name="arch" type="xml">
+      <list string="Courses">
+        <field name="name"/>
+        <field name="student_qty"/>
+        <field name="type"/>
+        <field name="grades_average"/>
+        <field name="description"/>
+        <field name="is_active"/>
+        <field name="course_start"/>
+        <field name="course_end"/>
+        <field name="last_evaluation"/>
+        <field name="course_shift"/>
+        <field name="teacher_id"/>
+        <field name="evalutation_ids"/>
+        <field name="students_ids"/>
+      </list>
+    </field>
+  </record> 
+
+  <record id="grades_course_form_view" model="ir.ui.view">
+    <field name="name">grades.course.form</field>
+    <field name="model">grades.course</field>
+    <field name="arch" type="xml">
+      <form string="Course">
+        <header>
+          <field name="state" widget="statusbar" options="{'clickable': 1}" />
+        </header>
+        <sheet>
+          <field name="invalid_dates" invisible="1"/>
+          <div class="text-warning mb-3" invisible="not invalid_dates">The start date cannot be greater than the end date</div>
+          <group>
+            <group>
+              <field name="name" required="True"/>
+              <field name="description"/>
+              <field name="course_start" required="True"/>
+              <field name="course_end" required="True"/>
+              <field name="teacher_id" domain="[('is_teacher', '=', True)]" required="True" readonly="state != 'register'" context="{'form_view_ref':'grades_manager.teachers_form_view'}"/>
+              <field name="teacher_email" string="Teacher email" readonly="0"/>
+            </group>
+
+            <group invisible="state == 'register'">
+              <field name="course_image"/>
+              <field name="student_qty"/>
+              <field name="is_active"/>
+              <field name="last_evaluation" readonly="1"/>
+              <field name="course_shift"/>
+              <field name="type" readonly="1"/>
+              <field name="create_uid" invisible="1"/>
+            </group>
+          </group>
+          <notebook>
+              
+              <page string="Evaluations" name="evaluations" >
+                <field name="evalutation_ids" readonly="state != 'register'"/>
+              </page>
+              
+              <page string="Students" name="students" >
+                <field name="students_ids" domain="[('is_student', '=', True)]" readonly="state != 'register'"
+                context="{
+                'list_view_ref': 'grades_manager.student_tree_view',
+                'form_view_ref': 'grades_manager.student_form_view'}"/>
+              </page>
+              
+              
+          </notebook>
+          
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

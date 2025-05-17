@@ -1,0 +1,30 @@
+<odoo>
+
+  <!-- Menú principal -->
+  <menuitem id="menu_library_root"
+            name="Library Analytics"
+            sequence="10"/>
+
+  <!-- Menú: Books -->
+  <menuitem id="menu_library_books"
+            name="Books"
+            parent="menu_library_root"
+            action="library_analytics.action_library_book"
+            sequence="20"/>
+
+  
+  <!-- Menú: Rentals -->
+  <menuitem id="menu_library_rentals"
+            name="Rentals"
+            parent="library_analytics.menu_library_root"
+            action="action_library_rental"
+            sequence="30"/>
+
+  <!-- Menú: Reading Logs -->
+  <menuitem id="menu_library_reading_logs"
+            name="Reading Logs"
+            parent="library_analytics.menu_library_root"
+            action="action_library_reading_log"
+            sequence="40"/>
+
+</odoo>

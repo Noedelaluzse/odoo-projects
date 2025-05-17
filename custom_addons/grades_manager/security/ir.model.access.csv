@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+grades_course_access,grades.course.access,model_grades_course,base.group_user,1,1,1,1
+grades_evaluation_access,grades.evaluation.access,model_grades_evaluation,base.group_user,1,1,1,1
+grades_grade_access,grades.grade.access,model_grades_grade,base.group_user,1,1,1,1
+advanced_course_wizard_access,advanced.course.wizard.access,model_advanced_course_wizard,base.group_user,1,1,1,1

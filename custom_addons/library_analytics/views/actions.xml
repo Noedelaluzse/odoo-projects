@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Action: Books -->
+  <record id="action_library_book" model="ir.actions.act_window">
+    <field name="name">Books</field>
+    <field name="res_model">library.book</field>
+    <field name="view_mode">list,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Create your first book</p>
+    </field>
+  </record>
+
+  <!-- Action: Rentals -->
+  <record id="action_library_rental" model="ir.actions.act_window">
+    <field name="name">Rentals</field>
+    <field name="res_model">library.rental</field>
+    <field name="view_mode">list,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Create your first rental</p>
+    </field>
+  </record>
+
+  <!-- Action: Reading Logs -->
+  <record id="action_library_reading_log" model="ir.actions.act_window">
+    <field name="name">Reading Logs</field>
+    <field name="res_model">library.reading.log</field>
+    <field name="view_mode">list,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Start tracking your reading progress</p>
+    </field>
+  </record>
+
+</odoo>

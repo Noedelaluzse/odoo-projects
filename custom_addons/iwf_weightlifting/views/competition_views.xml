@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Vista list -->
+  <record id="view_iwf_competition_list" model="ir.ui.view">
+    <field name="name">iwf.competition.list</field>
+    <field name="model">iwf.competition</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="start_date"/>
+        <field name="end_date"/>
+        <field name="country_id"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Vista form -->
+  <record id="view_iwf_competition_form" model="ir.ui.view">
+    <field name="name">iwf.competition.form</field>
+    <field name="model">iwf.competition</field>
+    <field name="arch" type="xml">
+      <form string="Competencia">
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="code"/>
+          </group>
+          <group>
+            <field name="start_date"/>
+            <field name="end_date"/>
+          </group>
+          <group>
+            <field name="location"/>
+            <field name="country_id"/>
+          </group>
+          <group>
+            <field name="rule_set_id"/>
+            <field name="organizer_id"/>
+          </group>
+          <group>
+            <field name="state"/>
+            <field name="total_athletes" readonly="1"/>
+            <field name="total_categories" readonly="1"/>
+          </group>
+          <group string="Categorías de la Competencia">
+            <field name="competition_category_ids">
+              <list editable="bottom">
+                <field name="age_group_id"/>
+                <field name="weight_category_id"/>
+                <field name="gender"/>
+                <field name="total_participants" readonly="1"/>
+              </list>
+            </field>
+          </group>
+
+          <group string="Notas">
+            <field name="notes"/>
+          </group>
+          
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Vista search -->
+  <record id="view_iwf_competition_search" model="ir.ui.view">
+    <field name="name">iwf.competition.search</field>
+    <field name="model">iwf.competition</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="country_id"/>
+        <field name="rule_set_id"/>
+        <filter name="filter_open" string="Abiertas" domain="[('state','=','open')]"/>
+        <filter name="filter_closed" string="Cerradas" domain="[('state','=','closed')]"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- Acción -->
+  <record id="action_iwf_competition" model="ir.actions.act_window">
+    <field name="name">Competencias</field>
+    <field name="res_model">iwf.competition</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+      (0, 0, {'view_mode': 'list', 'view_id': ref('view_iwf_competition_list')}),
+      (0, 0, {'view_mode': 'form', 'view_id': ref('view_iwf_competition_form')})]"/>
+    <field name="search_view_id" ref="view_iwf_competition_search"/>
+    <field name="context">{}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Crea y gestiona eventos oficiales de halterofilia.
+      </p>
+    </field>
+  </record>
+
+</odoo>

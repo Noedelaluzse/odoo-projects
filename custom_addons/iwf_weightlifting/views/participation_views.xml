@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Vista list -->
+  <record id="view_iwf_participation_list" model="ir.ui.view">
+    <field name="name">iwf.participation.list</field>
+    <field name="model">iwf.participation</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="athlete_id"/>
+        <field name="competition_id"/>
+        <field name="competition_category_id"/>
+        <field name="weight_in"/>
+        <field name="status"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Vista form -->
+  <record id="view_iwf_participation_form" model="ir.ui.view">
+    <field name="name">iwf.participation.form</field>
+    <field name="model">iwf.participation</field>
+    <field name="arch" type="xml">
+      <form string="Participación de Atleta">
+        <sheet>
+          <group>
+            <field name="athlete_id"/>
+            <field name="competition_id"/>
+            <field name="competition_category_id"/>
+            <field name="status"/>
+          </group>
+          <group>
+            <field name="weight_in"/>
+            <field name="lot_number"/>
+          </group>
+          <group string="Primer Intento">
+            <field name="snatch_first_attempt"/>
+            <field name="cleanjerk_first_attempt"/>
+          </group>
+          <group>
+            <field name="notes"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Vista search -->
+  <record id="view_iwf_participation_search" model="ir.ui.view">
+    <field name="name">iwf.participation.search</field>
+    <field name="model">iwf.participation</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="athlete_id"/>
+        <field name="competition_id"/>
+        <field name="competition_category_id"/>
+        <filter name="filter_active" string="Activas" domain="[('status', '=', 'active')]"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- Acción -->
+  <record id="action_iwf_participation" model="ir.actions.act_window">
+    <field name="name">Participaciones</field>
+    <field name="res_model">iwf.participation</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+      (0, 0, {'view_mode': 'list', 'view_id': ref('view_iwf_participation_list')}),
+      (0, 0, {'view_mode': 'form', 'view_id': ref('view_iwf_participation_form')})]"/>
+    <field name="search_view_id" ref="view_iwf_participation_search"/>
+    <field name="context">{}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Administra la participación oficial de atletas en sus respectivas competencias.
+      </p>
+    </field>
+  </record>
+
+</odoo>

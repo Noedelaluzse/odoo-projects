@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- List view -->
+  <record id="library_rental_list_view" model="ir.ui.view">
+    <field name="name">library.rental.list</field>
+    <field name="model">library.rental</field>
+    <field name="arch" type="xml">
+      <list string="list_name">
+        <field name="book_id"/>
+        <field name="renter_id"/>
+        <field name="rental_date"/>
+        <field name="return_date"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+
+    <!-- Form view -->
+  <record id="library_rental_form_view" model="ir.ui.view">
+    <field name="name">library.rental.form</field>
+    <field name="model">library.rental</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="book_id"/>
+            <field name="renter_id"/>
+          </group>
+          <group>
+            <field name="rental_date"/>
+            <field name="return_date"/>
+            <field name="state"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  
+    <!-- Search view -->
+  <record id="view_library_rental_search" model="ir.ui.view">
+    <field name="name">library.rental.search</field>
+    <field name="model">library.rental</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="book_id"/>
+        <field name="renter_id"/>
+        <filter name="state_ongoing" string="Ongoing" domain="[('state','=','ongoing')]"/>
+        <filter name="state_returned" string="Returned" domain="[('state','=','returned')]"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <!-- <record id="action_library_rental" model="ir.actions.act_window">
+    <field name="name">Rentals</field>
+    <field name="res_model">library.rental</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Create your first rental</p>
+    </field>
+  </record> -->
+</odoo>
