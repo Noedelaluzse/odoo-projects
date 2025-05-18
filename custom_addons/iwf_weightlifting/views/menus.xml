@@ -106,5 +106,30 @@
         name="Categorías de Peso" 
         parent="menu_iwf_config_root" 
         action="action_iwf_weight_category"/>
+    
+    <!-- Menú: Dashboard (solo organizadores) -->
+    <!-- <menuitem 
+        id="menu_iwf_dashboard_root" 
+        name="Dashboard" 
+        parent="menu_iwf_root" 
+        sequence="5"
+        groups="iwf_weightlifting.group_iwf_organizer"/>
+
+    <menuitem 
+        id="menu_iwf_dashboard_organizer" 
+        name="Vista General del Evento" 
+        parent="menu_iwf_dashboard_root" 
+        action="action_iwf_dashboard_organizer_web"
+        sequence="1"
+        groups="iwf_weightlifting.group_iwf_organizer"/> -->
+
+        <!-- Menú: Dashboard del Organizador -->
+    <menuitem
+        id="menu_iwf_dashboard_organizer"
+        name="Dashboard del Organizador"
+        parent="menu_iwf_root"
+        sequence="5"
+        action="action_iwf_dashboard_organizer"
+        groups="iwf_weightlifting.group_iwf_organizer"/>
 
 </odoo>

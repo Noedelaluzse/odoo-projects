@@ -26,13 +26,17 @@
         'views/penalty_views.xml',
         'views/equipment_check_views.xml',
         'views/antidoping_test_views.xml',
+        'views/dashboard_organizer_views.xml',
         'views/menus.xml',
+        # 'controllers/dashboard_template.xml',
         # 'report/result_report.xml',
         # 'report/penalty_report.xml',
     ],
     'assets': {
         'web.assets_backend': [
             # si necesitas JS o CSS personalizados, aquí los cargas
+            'iwf_weightlifting/static/src/js/dashboard_organizer.js',
+            'iwf_weightlifting/static/src/xml/dashboard_organizer.xml'
         ],
     },
     'installable': True,

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Acción tipo cliente (dashboard del organizador) -->
+  <record id="action_iwf_dashboard_organizer" model="ir.actions.client">
+    <field name="name">Dashboard del Organizador</field>
+    <field name="tag">iwf_dashboard.organizer</field>
+  </record>
+
+</odoo>
