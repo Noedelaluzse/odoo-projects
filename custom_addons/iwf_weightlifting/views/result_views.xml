@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
   <!-- Vista list -->
@@ -12,6 +11,7 @@
         <field name="medal"/>
         <field name="position"/>
         <field name="disqualified"/>
+        <field name="tie_breaker_applied"/>
       </list>
     </field>
   </record>
@@ -28,6 +28,7 @@
             <field name="position"/>
             <field name="medal"/>
             <field name="disqualified"/>
+            <field name="tie_breaker_applied" readonly="1"/>
           </group>
           <group string="Totales">
             <field name="best_snatch" readonly="1"/>
@@ -35,7 +36,7 @@
             <field name="total" readonly="1"/>
           </group>
           <group>
-            <field name="tie_break_notes"/>
+            <field name="tie_breaker_notes"/>
           </group>
         </sheet>
       </form>
@@ -74,6 +75,7 @@
         <field name="medal"/>
         <field name="disqualified"/>
         <field name="position"/>
+        <field name="tie_breaker_applied"/>
         <filter name="gold_filter" string="Medalla de Oro" domain="[('medal','=','gold')]"/>
       </search>
     </field>

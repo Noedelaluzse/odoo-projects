@@ -7,3 +7,6 @@ from . import competition_category
 from . import participation
 from . import lift_attempt
 from . import result
+from . import penalty
+from . import equipment_check
+from . import antidoping_test

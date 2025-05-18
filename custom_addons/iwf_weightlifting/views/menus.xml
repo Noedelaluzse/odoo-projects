@@ -67,7 +67,7 @@
         name="Intentos" 
         parent="menu_iwf_control_root" 
         action="action_iwf_lift_attempt"/>
-    <!-- <menuitem 
+    <menuitem 
         id="menu_iwf_penalty_list" 
         name="Penalizaciones" 
         parent="menu_iwf_control_root" 
@@ -81,7 +81,7 @@
         id="menu_iwf_antidoping_test_list" 
         name="Pruebas Antidopaje" 
         parent="menu_iwf_control_root" 
-        action="action_iwf_antidoping_test"/> -->
+        action="action_iwf_antidoping_test"/>
     
     <!-- Menú: Configuración (Solo organizadores) -->
     <menuitem 

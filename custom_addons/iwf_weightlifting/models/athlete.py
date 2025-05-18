@@ -55,7 +55,12 @@ class IwfAthlete(models.Model):
 
     # Estado de actividad del atleta en el sistema
     active = fields.Boolean(string='Activo', default=True)
-
+    
+    penalty_ids = fields.One2many(
+        'iwf.penalty',
+        'athlete_id',
+        string='Sanciones'
+    )
     # Restricción para que el código público sea único en toda la base de datos
     _sql_constraints = [
         ('code_unique', 'unique(athlete_code)', 'El código público del atleta debe ser único.')

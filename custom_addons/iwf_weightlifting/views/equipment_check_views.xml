@@ -1,0 +1,83 @@
+<odoo>
+
+  <!-- Vista Formulario -->
+  <record id="view_iwf_equipment_check_form" model="ir.ui.view">
+    <field name="name">iwf.equipment_check.form</field>
+    <field name="model">iwf.equipment_check</field>
+    <field name="arch" type="xml">
+      <form string="Revisión de Indumentaria">
+        <sheet>
+          <group>
+            <field name="athlete_id"/>
+            <field name="competition_id"/>
+          </group>
+
+          <group string="Elementos Revisados">
+            <field name="singlet_ok"/>
+            <field name="belt_ok"/>
+            <field name="shoes_ok"/>
+            <field name="wristwraps_ok"/>
+            <field name="tape_ok"/>
+          </group>
+
+          <group>
+            <field name="approved" readonly="1"/>
+            <field name="notes"/>
+          </group>
+
+          <group>
+            <field name="reviewed_by" readonly="1"/>
+            <field name="timestamp" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Vista Lista -->
+  <record id="view_iwf_equipment_check_list" model="ir.ui.view">
+    <field name="name">iwf.equipment_check.list</field>
+    <field name="model">iwf.equipment_check</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="athlete_id"/>
+        <field name="competition_id"/>
+        <field name="approved"/>
+        <field name="timestamp"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Vista Búsqueda -->
+  <record id="view_iwf_equipment_check_search" model="ir.ui.view">
+    <field name="name">iwf.equipment_check.search</field>
+    <field name="model">iwf.equipment_check</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="athlete_id"/>
+        <field name="competition_id"/>
+        <field name="approved"/>
+        <field name="notes"/>
+        <field name="reviewed_by"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- Acción -->
+  <record id="action_iwf_equipment_check" model="ir.actions.act_window">
+    <field name="name">Revisiones de Indumentaria</field>
+    <field name="res_model">iwf.equipment_check</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+      (0, 0, {'view_mode': 'list', 'view_id': ref('view_iwf_equipment_check_list')}),
+      (0, 0, {'view_mode': 'form', 'view_id': ref('view_iwf_equipment_check_form')})]"/>
+    <field name="search_view_id" ref="view_iwf_equipment_check_search"/>
+  </record>
+
+  <!-- Entrada de menú -->
+  <menuitem id="menu_iwf_equipment_check"
+            name="Revisiones de Indumentaria"
+            parent="iwf_weightlifting.menu_iwf_root"
+            action="action_iwf_equipment_check"/>
+
+</odoo>

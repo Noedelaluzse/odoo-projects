@@ -1,0 +1,77 @@
+<odoo>
+
+  <!-- Vista Formulario -->
+  <record id="view_iwf_penalty_form" model="ir.ui.view">
+    <field name="name">iwf.penalty.form</field>
+    <field name="model">iwf.penalty</field>
+    <field name="arch" type="xml">
+      <form string="Sanción">
+        <sheet>
+          <group>
+            <field name="type"/>
+            <field name="reason"/>
+            <field name="details"/>
+          </group>
+
+          <group string="Información Relacionada">
+            <field name="athlete_id"/>
+            <field name="competition_id"/>
+            <field name="participation_id"/>
+            <field name="lift_attempt_id">
+              <tree_invisible>
+                <modifier name="invisible" eval="record.type.raw_value !== 'technical'"/>
+              </tree_invisible>
+            </field>
+          </group>
+
+          <group string="Registro">
+            <field name="applied_by" readonly="1"/>
+            <field name="timestamp" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Vista Lista -->
+  <record id="view_iwf_penalty_list" model="ir.ui.view">
+    <field name="name">iwf.penalty.list</field>
+    <field name="model">iwf.penalty</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="athlete_id"/>
+        <field name="type"/>
+        <field name="reason"/>
+        <field name="competition_id"/>
+        <field name="timestamp"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Vista Búsqueda -->
+  <record id="view_iwf_penalty_search" model="ir.ui.view">
+    <field name="name">iwf.penalty.search</field>
+    <field name="model">iwf.penalty</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="type"/>
+        <field name="athlete_id"/>
+        <field name="competition_id"/>
+        <field name="applied_by"/>
+        <field name="timestamp"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- Acción -->
+  <record id="action_iwf_penalty" model="ir.actions.act_window">
+    <field name="name">Sanciones</field>
+    <field name="res_model">iwf.penalty</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+      (0, 0, {'view_mode': 'list', 'view_id': ref('view_iwf_penalty_list')}),
+      (0, 0, {'view_mode': 'form', 'view_id': ref('view_iwf_penalty_form')})]"/>
+    <field name="search_view_id" ref="view_iwf_penalty_search"/>
+  </record>
+
+</odoo>

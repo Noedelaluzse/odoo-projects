@@ -54,7 +54,11 @@ class IwfLiftAttempt(models.Model):
 
     # Fecha y hora del intento registrado
     timestamp = fields.Datetime(string='Registrado en', default=lambda self: datetime.now())
-
+    penalty_ids = fields.One2many(
+        'iwf.penalty',
+        'lift_attempt_id',
+        string='Sanciones Asociadas'
+    )
     # Restricción: no más de 3 intentos por tipo de levantamiento y atleta
     @api.constrains('participation_id', 'type', 'attempt_number')
     def _check_attempt_limits(self):
@@ -67,12 +71,12 @@ class IwfLiftAttempt(models.Model):
             if len(attempts.filtered(lambda a: a.id != record.id)) >= 3:
                 raise ValidationError("No se pueden registrar más de 3 intentos por tipo de levantamiento.")
 
-    # Validación: peso no puede disminuir respecto al intento anterior si fue válido
+    # Validación: peso no puede disminuir respecto al intento anterior si fue válido# Validación: peso no puede disminuir respecto al intento anterior si fue válido
     @api.constrains('weight')
     def _check_weight_progression(self):
         for record in self:
             prev_attempts = self.env['iwf.lift_attempt'].search([
-                ('participation_id', '=', record.particpiation_id.id),
+                ('participation_id', '=', record.participation_id.id),  # <--- corregido aquí
                 ('type', '=', record.type),
                 ('status', '=', 'valid'),
                 ('attempt_number', '<', record.attempt_number)
@@ -81,6 +85,8 @@ class IwfLiftAttempt(models.Model):
                 max_prev_weight = max(prev_attempts.mapped('weight'))
                 if record.weight < max_prev_weight:
                     raise ValidationError("El nuevo intento debe ser igual o mayor al mejor intento válido anterior.")
+                
+
     @api.constrains(
     'white_judge_1', 'white_judge_2', 'white_judge_3',
     'red_judge_1', 'red_judge_2', 'red_judge_3'

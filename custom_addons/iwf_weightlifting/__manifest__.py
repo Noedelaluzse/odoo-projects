@@ -23,15 +23,12 @@
         'views/participation_views.xml',
         'views/lift_attempt_views.xml',
         'views/result_views.xml',
-        # 'views/penalty_views.xml',
-        # 'views/antidoping_test_views.xml',
-        # 'views/equipment_check_views.xml',
+        'views/penalty_views.xml',
+        'views/equipment_check_views.xml',
+        'views/antidoping_test_views.xml',
         'views/menus.xml',
         # 'report/result_report.xml',
         # 'report/penalty_report.xml',
-        # 'data/rule_sets.xml',
-        # 'data/default_categories.xml',
-        # 'data/default_age_groups.xml'
     ],
     'assets': {
         'web.assets_backend': [

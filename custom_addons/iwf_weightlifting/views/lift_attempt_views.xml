@@ -45,6 +45,17 @@
             <field name="notes"/>
             <field name="timestamp" readonly="1"/>
           </group>
+                  <notebook>
+          <page string="Sanciones Asociadas">
+            <field name="penalty_ids" readonly="1">
+              <list>
+                <field name="type"/>
+                <field name="reason"/>
+                <field name="timestamp"/>
+              </list>
+            </field>
+          </page>
+        </notebook>
         </sheet>
       </form>
     </field>

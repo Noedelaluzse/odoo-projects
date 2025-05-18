@@ -75,6 +75,11 @@ class IwfParticipation(models.Model):
         ondelete='set null',
         help='Resultado final generado a partir de los intentos de esta participación.'
     )
+
+    # Sanciones relacionadas con esta participación
+    penalty_ids = fields.One2many('iwf.penalty', 'participation_id', string='Sanciones')
+
+
     # Restricción: Un atleta no puede inscribirse más de una vez en la misma competencia y categoría
     _sql_constraints = [
         (
@@ -108,8 +113,3 @@ class IwfParticipation(models.Model):
                     raise ValidationError("El peso ingresado excede el límite de la categoría.")
 
     # Relaciones futuras (comentadas hasta que los modelos estén definidos)
-
-
-
-    # Sanciones relacionadas con esta participación
-    # penalty_ids = fields.One2many('iwf.penalty', 'participation_id', string='Sanciones')

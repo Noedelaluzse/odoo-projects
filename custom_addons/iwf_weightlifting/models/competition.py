@@ -77,6 +77,12 @@ class IwfCompetition(models.Model):
         string='Categorías'
     )
 
+    penalty_ids = fields.One2many(
+        'iwf.penalty',
+        'competition_id',
+        string='Sanciones Aplicadas'
+    )      
+
     # Restricción de unicidad en el campo code
     _sql_constraints = [
         ('code_unique', 'unique(code)', 'El código de la competencia debe ser único.')

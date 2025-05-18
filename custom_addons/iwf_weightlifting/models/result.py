@@ -7,7 +7,6 @@ class IwfResult(models.Model):
     _description = 'Resultado Final del Atleta'
     _order = 'position'
 
-    # Relación obligatoria con la participación
     participation_id = fields.Many2one(
         'iwf.participation',
         string='Participación',
@@ -15,7 +14,6 @@ class IwfResult(models.Model):
         ondelete='cascade'
     )
 
-    # Cálculo de los mejores levantamientos válidos
     best_snatch = fields.Float(string='Mejor Arranque', compute='_compute_best_lifts', store=True)
     best_cleanjerk = fields.Float(string='Mejor Envión', compute='_compute_best_lifts', store=True)
     total = fields.Float(string='Total', compute='_compute_total', store=True)
@@ -28,7 +26,8 @@ class IwfResult(models.Model):
     ], string='Medalla')
 
     disqualified = fields.Boolean(string='Descalificado', default=False)
-    tie_break_notes = fields.Text(string='Notas de Desempate')
+    tie_breaker_applied = fields.Boolean(string='Desempate Aplicado', default=False)
+    tie_breaker_notes = fields.Text(string='Notas de Desempate')
 
     @api.depends('participation_id.lift_attempt_ids')
     def _compute_best_lifts(self):
@@ -38,7 +37,7 @@ class IwfResult(models.Model):
             cleanjerks = attempts.filtered(lambda a: a.type == 'cleanjerk').mapped('weight')
             record.best_snatch = max(snatches) if snatches else 0.0
             record.best_cleanjerk = max(cleanjerks) if cleanjerks else 0.0
-            record.disqualified = not snatches or not cleanjerks  # Triple fallo
+            record.disqualified = not snatches or not cleanjerks
 
     @api.depends('best_snatch', 'best_cleanjerk')
     def _compute_total(self):
@@ -50,12 +49,10 @@ class IwfResult(models.Model):
         Participation = self.env['iwf.participation']
         participations = Participation.search([('competition_category_id', '=', category_id)])
 
-        # Crear resultados si no existen
         for p in participations:
             if not Result.search([('participation_id', '=', p.id)]):
                 Result.create({'participation_id': p.id})
 
-        # Recalcular posiciones
         results = Result.search([
             ('participation_id.competition_category_id', '=', category_id),
             ('disqualified', '=', False)
@@ -70,8 +67,14 @@ class IwfResult(models.Model):
             )
         )
 
+        # Determinar empate
+        last_total = None
+        last_cleanjerk = None
+        seen_positions = {}
+
         for index, result in enumerate(sorted_results, start=1):
             result.position = index
+
             if index == 1:
                 result.medal = 'gold'
             elif index == 2:
@@ -80,6 +83,20 @@ class IwfResult(models.Model):
                 result.medal = 'bronze'
             else:
                 result.medal = False
+
+            # Detectar si se aplicó desempate
+            if (
+                last_total is not None and result.total == last_total and
+                result.best_cleanjerk != last_cleanjerk
+            ):
+                result.tie_breaker_applied = True
+                result.tie_breaker_notes = "Desempate aplicado por mejor envión."
+            else:
+                result.tie_breaker_applied = False
+                result.tie_breaker_notes = False
+
+            last_total = result.total
+            last_cleanjerk = result.best_cleanjerk
 
     def get_attempt_count(self):
         return len(self.participation_id.lift_attempt_ids.filtered(lambda a: a.status == 'valid'))
