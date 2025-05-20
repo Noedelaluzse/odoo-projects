@@ -9,15 +9,21 @@ import { useService } from "@web/core/utils/hooks";
 //import moment from './moment.min'
 export class DashboardOrganizer extends Component {
   setup() {
+    const savedPeriod = parseInt(
+      localStorage.getItem("dashboard_period") || "90"
+    );
+
     this.state = useState({
       quotations: {
         value: 10,
         percentage: 6,
       },
-      period: 90,
+      period: savedPeriod,
     });
+
     this.orm = useService("orm");
     this.actionService = useService("action");
+
     onWillStart(async () => {
       await loadJS(
         "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
@@ -29,6 +35,7 @@ export class DashboardOrganizer extends Component {
   }
 
   async onChangePeriod() {
+    localStorage.setItem("dashboard_period", this.state.period);
     this.getDates();
     await this.getQuotations();
     await this.getOrders();
@@ -219,6 +226,49 @@ export class DashboardOrganizer extends Component {
         [false, "pivot"],
         [false, "form"],
       ],
+    });
+  }
+
+  viewTopProducts() {
+    this.actionService.doAction({
+      type: "ir.actions.act_window",
+      name: "Top Products",
+      res_model: "sale.order.line",
+      views: [
+        [false, "list"],
+        [false, "form"],
+      ],
+      domain: [], // puedes aplicar filtros si los deseas
+    });
+  }
+
+  viewTopSales() {
+    this.actionService.doAction({
+      type: "ir.actions.act_window",
+      name: "Top Sales People",
+      res_model: "res.users", // o el modelo correcto para vendedores
+      views: [
+        [false, "list"],
+        [false, "form"],
+      ],
+      domain: [],
+    });
+  }
+
+  viewMonthlySales() {
+    this.viewOrders(); // o una versión filtrada más específica si quieres
+  }
+
+  viewPartnerOrders() {
+    this.actionService.doAction({
+      type: "ir.actions.act_window",
+      name: "Partners Orders",
+      res_model: "res.partner",
+      views: [
+        [false, "list"],
+        [false, "form"],
+      ],
+      domain: [],
     });
   }
 }

@@ -37,7 +37,7 @@
                   <h3 class="text-primary fw-bold">
                     Top Products
                   </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer">
+                  <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="viewTopProducts">
                     <span class="fa fa-arrow-right text-white" />
                   </div>
                 </div>
@@ -50,11 +50,11 @@
                   <h3 class="text-primary fw-bold">
                     Top Sales People
                   </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer">
+                  <div class="px-3 py-1 bg-primary cursor-pointer"  t-on-click="viewTopSales">
                     <span class="fa fa-arrow-right text-white" />
                   </div>
                 </div>
-                <ChartRender type="'pie'" title="'Top Sales People Report'"/>
+               <ChartRender type="'pie'" title="'Top Sales People Report'"/>
               </div>
             </div>               
           </div>
@@ -67,11 +67,11 @@
                   <h3 class="text-primary fw-bold">
                     Monthly Sales
                   </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer">
+                  <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="viewMonthlySales">
                     <span class="fa fa-arrow-right text-white" />
                   </div>
                 </div>
-                <ChartRender type="'bar'" title="'Monthly Sales Report'"/>
+                <ChartRender type="'bar'" title="'Monthly Sales Report'" />
               </div>
             </div>            
           </div>
@@ -82,11 +82,11 @@
                   <h3 class="text-primary fw-bold">
                     Partners Orders
                   </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer">
+                  <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="viewPartnerOrders">
                     <span class="fa fa-arrow-right text-white" />
                   </div>
                 </div>
-                <ChartRender type="'line'" title="'Partners Orders Report'"/>
+               <ChartRender type="'line'" title="'Partners Orders Report'"/>
               </div>
             </div>            
           </div>
