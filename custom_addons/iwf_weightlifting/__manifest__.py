@@ -35,8 +35,11 @@
     'assets': {
         'web.assets_backend': [
             # si necesitas JS o CSS personalizados, aquí los cargas
-            'iwf_weightlifting/static/src/js/dashboard_organizer.js',
-            'iwf_weightlifting/static/src/xml/dashboard_organizer.xml'
+        # 'iwf_weightlifting/static/src/js/dashboard_organizer.js',
+        # 'iwf_weightlifting/static/src/xml/dashboard_organizer.xml'
+        'iwf_weightlifting/static/src/components/**/*.js',
+        'iwf_weightlifting/static/src/components/**/*.xml',
+        'iwf_weightlifting/static/src/components/**/*.scss',
         ],
     },
     'installable': True,

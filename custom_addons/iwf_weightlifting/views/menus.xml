@@ -129,7 +129,7 @@
         name="Dashboard del Organizador"
         parent="menu_iwf_root"
         sequence="5"
-        action="action_iwf_dashboard_organizer"
+        action="action_iwf_weightlifting_dashboard_organize"
         groups="iwf_weightlifting.group_iwf_organizer"/>
 
 </odoo>
