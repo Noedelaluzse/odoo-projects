@@ -34,3 +34,4 @@ access_iwf_antidoping_test_viewer,access.iwf.antidoping.test.viewer,model_iwf_an
 access_athlete_dashboard,access.athlete.dashboard,model_iwf_athlete,iwf_weightlifting.group_iwf_organizer,1,0,0,0
 access_lift_attempt_dashboard,access.lift_attempt.dashboard,model_iwf_lift_attempt,iwf_weightlifting.group_iwf_organizer,1,0,0,0
 access_penalty_dashboard,access.penalty.dashboard,model_iwf_penalty,iwf_weightlifting.group_iwf_organizer,1,0,0,0
+access_generate_results_wizard,access.generate.results.wizard,model_generate_results_wizard,iwf_weightlifting.group_iwf_organizer,1,1,1,1

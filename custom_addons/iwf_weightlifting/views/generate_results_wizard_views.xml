@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="view_generate_results_wizard_form" model="ir.ui.view">
+    <field name="name">generate.results.wizard.form</field>
+    <field name="model">generate.results.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Generar Resultados Finales">
+        <group>
+          <field name="competition_id"/>
+          <field name="competition_category_id"/>
+          <field name="gender"/>
+        </group>
+        <footer>
+          <button name="action_generate_results" string="Generar Resultados" type="object" class="btn-primary"/>
+          <button string="Cancelar" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_generate_results_wizard" model="ir.actions.act_window">
+    <field name="name">Generar Resultados</field>
+    <field name="res_model">generate.results.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_generate_results_wizard_form"/>
+    <field name="target">new</field>
+  </record>
+
+</odoo>

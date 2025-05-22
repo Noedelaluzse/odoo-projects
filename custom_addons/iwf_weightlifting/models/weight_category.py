@@ -34,14 +34,15 @@ class IwfWeightCategory(models.Model):
             ]
             others = self.env['iwf.weight_category'].search(domain)
             for other in others:
-                if (record.max_weight >= (other.min_weight or 0)) and \
-                   ((record.min_weight or 0) <= other.max_weight):
+                if (record.max_weight > (other.min_weight or 0)) and \
+                ((record.min_weight or 0) < other.max_weight):
                     raise ValidationError("El rango de peso se superpone con otra categoría del mismo género y conjunto de reglas.")
 
-    api.model_create_multi
-    def create(self, vals):
-        if not vals.get('name'):
-            max_w = vals.get('max_weight')
-            name = f"+{int(max_w)} kg" if vals.get('is_super_heavy') else f"–{int(max_w)} kg"
-            vals['name'] = name
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('name'):
+                max_w = vals.get('max_weight')
+                name = f"+{int(max_w)} kg" if vals.get('is_super_heavy') else f"–{int(max_w)} kg"
+                vals['name'] = name
+        return super().create(vals_list)

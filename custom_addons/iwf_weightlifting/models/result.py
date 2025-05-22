@@ -14,9 +14,28 @@ class IwfResult(models.Model):
         ondelete='cascade'
     )
 
-    best_snatch = fields.Float(string='Mejor Arranque', compute='_compute_best_lifts', store=True)
-    best_cleanjerk = fields.Float(string='Mejor Envión', compute='_compute_best_lifts', store=True)
-    total = fields.Float(string='Total', compute='_compute_total', store=True)
+    athlete_id = fields.Many2one(
+        related='participation_id.athlete_id',
+        string='Atleta',
+        store=True,
+        readonly=True
+    )
+
+    best_snatch = fields.Float(
+        string='Mejor Arranque',
+        compute='_compute_best_lifts',
+        store=True
+    )
+    best_cleanjerk = fields.Float(
+        string='Mejor Envión',
+        compute='_compute_best_lifts',
+        store=True
+    )
+    total = fields.Float(
+        string='Total',
+        compute='_compute_total',
+        store=True
+    )
 
     position = fields.Integer(string='Posición')
     medal = fields.Selection([
@@ -47,18 +66,21 @@ class IwfResult(models.Model):
     def update_positions(self, category_id):
         Result = self.env['iwf.result']
         Participation = self.env['iwf.participation']
-        participations = Participation.search([('competition_category_id', '=', category_id)])
 
+        participations = Participation.search([('competition_category_id', '=', category_id)])
         for p in participations:
             if not Result.search([('participation_id', '=', p.id)]):
                 Result.create({'participation_id': p.id})
 
-        results = Result.search([
-            ('participation_id.competition_category_id', '=', category_id),
-            ('disqualified', '=', False)
-        ])
+        results = Result.search([('participation_id.competition_category_id', '=', category_id)])
 
-        sorted_results = results.sorted(
+        results._compute_best_lifts()
+        results._compute_total()
+
+        valid_results = results.filtered(lambda r: not r.disqualified)
+        disqualified_results = results.filtered(lambda r: r.disqualified)
+
+        sorted_valid = valid_results.sorted(
             key=lambda r: (
                 -r.total,
                 -r.best_cleanjerk,
@@ -67,24 +89,16 @@ class IwfResult(models.Model):
             )
         )
 
-        # Determinar empate
         last_total = None
         last_cleanjerk = None
-        seen_positions = {}
 
-        for index, result in enumerate(sorted_results, start=1):
+        for index, result in enumerate(sorted_valid, start=1):
             result.position = index
-
-            if index == 1:
-                result.medal = 'gold'
-            elif index == 2:
-                result.medal = 'silver'
-            elif index == 3:
-                result.medal = 'bronze'
-            else:
-                result.medal = False
-
-            # Detectar si se aplicó desempate
+            result.medal = (
+                'gold' if index == 1 else
+                'silver' if index == 2 else
+                'bronze' if index == 3 else False
+            )
             if (
                 last_total is not None and result.total == last_total and
                 result.best_cleanjerk != last_cleanjerk
@@ -98,8 +112,14 @@ class IwfResult(models.Model):
             last_total = result.total
             last_cleanjerk = result.best_cleanjerk
 
+        for result in disqualified_results:
+            result.position = -1
+            result.medal = False
+            result.tie_breaker_applied = False
+            result.tie_breaker_notes = False
+
     def get_attempt_count(self):
         return len(self.participation_id.lift_attempt_ids.filtered(lambda a: a.status == 'valid'))
 
     def name_get(self):
-        return [(rec.id, f"{rec.participation_id.athlete_id.name} ({rec.total} kg)") for rec in self]
+        return [(rec.id, f"{rec.athlete_id.name} ({rec.total} kg)") for rec in self]

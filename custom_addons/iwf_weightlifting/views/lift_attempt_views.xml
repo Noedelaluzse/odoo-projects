@@ -24,8 +24,23 @@
     <field name="arch" type="xml">
       <form string="Intento de Levantamiento">
         <sheet>
+
           <group>
-            <field name="participation_id"/>
+            <!-- Paso 1: Competencia -->
+            <field name="competition_id" context="{'form_view_ref': 'iwf_weightlifting.view_iwf_competition_form'}"/>
+
+            <!-- Paso 2: Categoría de Competencia (nuevo filtro) -->
+            <field name="competition_category_id" domain="[('competition_id', '=', competition_id)]"/>
+
+            <!-- Paso 3: Participación, filtrada por competencia y categoría -->
+            <field name="participation_id"
+                   domain="[('competition_id', '=', competition_id), ('competition_category_id', '=', competition_category_id)]"/>
+
+            <!-- Info del atleta (solo lectura) -->
+            <field name="athlete_id" readonly="1"/>
+          </group>
+
+          <group>
             <field name="type"/>
             <field name="attempt_number"/>
             <field name="weight"/>
@@ -45,17 +60,19 @@
             <field name="notes"/>
             <field name="timestamp" readonly="1"/>
           </group>
-                  <notebook>
-          <page string="Sanciones Asociadas">
-            <field name="penalty_ids" readonly="1">
-              <list>
-                <field name="type"/>
-                <field name="reason"/>
-                <field name="timestamp"/>
-              </list>
-            </field>
-          </page>
-        </notebook>
+
+          <notebook>
+            <page string="Sanciones Asociadas">
+              <field name="penalty_ids" readonly="1">
+                <list>
+                  <field name="type"/>
+                  <field name="reason"/>
+                  <field name="timestamp"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+
         </sheet>
       </form>
     </field>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menú: Atletas -->
+    <menuitem id="menu_iwf_athlete_list" name="Lista de Atletas" parent="menu_iwf_athlete_root" action="action_iwf_athlete"/>
+
+    <!-- Menú: Eventos -->
+    <menuitem id="menu_iwf_competition_list" name="Competencias" parent="menu_iwf_event_root" action="action_iwf_competition"/>
+    <menuitem id="menu_iwf_category_list" name="Categorías de Competencia" parent="menu_iwf_event_root" action="action_iwf_competition_category"/>
+    <menuitem id="menu_iwf_participation_list" name="Participaciones" parent="menu_iwf_event_root" action="action_iwf_participation"/>
+
+    <!-- Menú: Resultados -->
+    <menuitem id="menu_iwf_result_list" name="Resultados Generales" parent="menu_iwf_results_root" action="action_iwf_result"/>
+    <menuitem id="menu_iwf_generate_results_wizard" name="Generar Resultados" parent="menu_iwf_results_root" action="action_generate_results_wizard"/>
+
+    <!-- Menú: Control Técnico -->
+    <menuitem id="menu_iwf_lift_attempt_list" name="Intentos" parent="menu_iwf_control_root" action="action_iwf_lift_attempt"/>
+    <menuitem id="menu_iwf_penalty_list" name="Penalizaciones" parent="menu_iwf_control_root" action="action_iwf_penalty"/>
+    <menuitem id="menu_iwf_equipment_check_list" name="Chequeo de Equipamiento" parent="menu_iwf_control_root" action="action_iwf_equipment_check"/>
+    <menuitem id="menu_iwf_antidoping_test_list" name="Pruebas Antidopaje" parent="menu_iwf_control_root" action="action_iwf_antidoping_test"/>
+
+    <!-- Menú: Configuración -->
+    <menuitem id="menu_iwf_rule_set_list" name="Reglas (Rule Sets)" parent="menu_iwf_config_root" action="action_iwf_rule_set"/>
+    <menuitem id="menu_iwf_age_group_list" name="Grupos de Edad" parent="menu_iwf_config_root" action="action_iwf_age_group"/>
+    <menuitem id="menu_iwf_weight_category_list" name="Categorías de Peso" parent="menu_iwf_config_root" action="action_iwf_weight_category"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_iwf_dashboard_organizer" name="Dashboard del Organizador" parent="menu_iwf_root" sequence="5" action="action_iwf_weightlifting_dashboard_organize" groups="iwf_weightlifting.group_iwf_organizer"/>
+</odoo>

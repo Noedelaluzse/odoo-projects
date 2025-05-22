@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menú raíz -->
+    <menuitem id="menu_iwf_root" name="Halterofilia" sequence="10"/>
+
+    <!-- Menú: Atletas -->
+    <menuitem id="menu_iwf_athlete_root" name="Atletas" parent="menu_iwf_root" sequence="10"/>
+
+    <!-- Menú: Eventos -->
+    <menuitem id="menu_iwf_event_root" name="Eventos" parent="menu_iwf_root" sequence="20"/>
+
+    <!-- Menú: Resultados -->
+    <menuitem id="menu_iwf_results_root" name="Resultados" parent="menu_iwf_root" sequence="30"/>
+
+    <!-- Menú: Control Técnico -->
+    <menuitem id="menu_iwf_control_root" name="Control y Revisión" parent="menu_iwf_root" sequence="40"/>
+
+    <!-- Menú: Configuración -->
+    <menuitem id="menu_iwf_config_root" name="Configuración" parent="menu_iwf_root" sequence="50" groups="iwf_weightlifting.group_iwf_organizer"/>
+
+</odoo>

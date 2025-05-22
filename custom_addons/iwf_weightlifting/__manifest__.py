@@ -12,8 +12,14 @@
         'contacts'
     ],
     'data': [
-        'security/iwf_security.xml',             # ✔ define los grupos aquí
-        'security/ir.model.access.csv',          # ✔ luego los usas en permisos
+        # Seguridad primero
+        'security/iwf_security.xml',
+        'security/ir.model.access.csv',
+
+        # Menú base (sin actions)
+        'views/menu_base.xml',
+
+        # Vistas que definen actions
         'views/rule_set_views.xml',
         'views/age_group_views.xml',
         'views/weight_category_views.xml',
@@ -27,19 +33,16 @@
         'views/equipment_check_views.xml',
         'views/antidoping_test_views.xml',
         'views/dashboard_organizer_views.xml',
-        'views/menus.xml',
-        # 'controllers/dashboard_template.xml',
-        # 'report/result_report.xml',
-        # 'report/penalty_report.xml',
+        
+        'views/generate_results_wizard_views.xml', 
+        # Menús con actions (estos van hasta el final)
+        'views/menu_items.xml',
     ],
     'assets': {
         'web.assets_backend': [
-            # si necesitas JS o CSS personalizados, aquí los cargas
-        # 'iwf_weightlifting/static/src/js/dashboard_organizer.js',
-        # 'iwf_weightlifting/static/src/xml/dashboard_organizer.xml'
-        'iwf_weightlifting/static/src/components/**/*.js',
-        'iwf_weightlifting/static/src/components/**/*.xml',
-        'iwf_weightlifting/static/src/components/**/*.scss',
+            'iwf_weightlifting/static/src/components/**/*.js',
+            'iwf_weightlifting/static/src/components/**/*.xml',
+            'iwf_weightlifting/static/src/components/**/*.scss',
         ],
     },
     'installable': True,

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
   <!-- Vista list -->
@@ -6,6 +7,7 @@
     <field name="model">iwf.result</field>
     <field name="arch" type="xml">
       <list string="Resultados">
+        <field name="athlete_id"/>
         <field name="participation_id"/>
         <field name="total"/>
         <field name="medal"/>
@@ -24,6 +26,7 @@
       <form string="Resultado Final del Atleta">
         <sheet>
           <group>
+            <field name="athlete_id" readonly="1"/>
             <field name="participation_id"/>
             <field name="position"/>
             <field name="medal"/>
@@ -43,7 +46,7 @@
     </field>
   </record>
 
-  <!-- Vista kanban (opcional: podio) -->
+  <!-- Vista kanban -->
   <record id="view_iwf_result_kanban" model="ir.ui.view">
     <field name="name">iwf.result.kanban</field>
     <field name="model">iwf.result</field>
@@ -53,7 +56,8 @@
           <t t-name="kanban-box">
             <div class="o_kanban_card">
               <div t-attf-class="oe_kanban_details o_kanban_color_{{ record.medal.raw_value }}">
-                <strong><field name="participation_id"/></strong>
+                <strong><field name="athlete_id"/></strong>
+                <div><field name="participation_id"/></div>
                 <div>Total: <field name="total"/></div>
                 <div>🥇 Medalla: <field name="medal"/></div>
                 <div>📍 Posición: <field name="position"/></div>
@@ -71,6 +75,7 @@
     <field name="model">iwf.result</field>
     <field name="arch" type="xml">
       <search>
+        <field name="athlete_id"/>
         <field name="participation_id"/>
         <field name="medal"/>
         <field name="disqualified"/>

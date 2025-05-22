@@ -77,7 +77,7 @@
   <!-- Entrada de menú -->
   <menuitem id="menu_iwf_equipment_check"
             name="Revisiones de Indumentaria"
-            parent="iwf_weightlifting.menu_iwf_root"
+            parent="menu_iwf_root"
             action="action_iwf_equipment_check"/>
 
 </odoo>

@@ -69,7 +69,7 @@
           <t t-name="card">
             <div class="oe_kanban_card">
               <div class="o_kanban_image">
-                <img t-att-src="kanban_image('iwf.athlete', 'image', record.id.raw_value)" class="oe_kanban_avatar" alt="Imagen del atleta"/>
+                <img t-att-src="'/web/image/iwf.athlete/' + record.id + '/image'" class="oe_kanban_avatar" alt="Imagen del atleta"/>
               </div>
               <div class="o_kanban_details">
                 <strong><field name="name"/></strong>
