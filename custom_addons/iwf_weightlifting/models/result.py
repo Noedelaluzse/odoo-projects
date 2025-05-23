@@ -48,6 +48,20 @@ class IwfResult(models.Model):
     tie_breaker_applied = fields.Boolean(string='Desempate Aplicado', default=False)
     tie_breaker_notes = fields.Text(string='Notas de Desempate')
 
+    competition_id = fields.Many2one(
+        related='participation_id.competition_id',
+        string='Competencia',
+        store=True,
+        readonly=True
+    )
+
+    competition_category_id = fields.Many2one(
+        related='participation_id.competition_category_id',
+        string='Categoría de Competencia',
+        store=True,
+        readonly=True
+    )
+
     @api.depends('participation_id.lift_attempt_ids')
     def _compute_best_lifts(self):
         for record in self:

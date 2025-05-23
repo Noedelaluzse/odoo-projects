@@ -8,8 +8,12 @@
       <form string="Revisión de Indumentaria">
         <sheet>
           <group>
-            <field name="athlete_id"/>
-            <field name="competition_id"/>
+            <field name="competition_id" required="1"/>
+            <field name="competition_category_id"
+                   domain="[('competition_id', '=', competition_id)]"/>
+            <field name="participation_id"
+                   domain="[('competition_id', '=', competition_id), ('competition_category_id', '=', competition_category_id)]"/>
+            <field name="athlete_id" readonly="1"/>
           </group>
 
           <group string="Elementos Revisados">
@@ -42,6 +46,8 @@
       <list>
         <field name="athlete_id"/>
         <field name="competition_id"/>
+        <field name="competition_category_id"/>
+        <field name="participation_id"/>
         <field name="approved"/>
         <field name="timestamp"/>
       </list>
@@ -54,11 +60,13 @@
     <field name="model">iwf.equipment_check</field>
     <field name="arch" type="xml">
       <search>
-        <field name="athlete_id"/>
         <field name="competition_id"/>
+        <field name="competition_category_id"/>
+        <field name="participation_id"/>
+        <field name="athlete_id"/>
         <field name="approved"/>
-        <field name="notes"/>
         <field name="reviewed_by"/>
+        <field name="timestamp"/>
       </search>
     </field>
   </record>

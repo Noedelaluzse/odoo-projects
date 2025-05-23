@@ -8,8 +8,15 @@
       <form string="Control Antidopaje">
         <sheet>
           <group>
-            <field name="athlete_id"/>
             <field name="competition_id"/>
+            <field name="competition_category_id"
+                   domain="[('competition_id', '=', competition_id)]"/>
+            <field name="participation_id"
+                   domain="[('competition_id', '=', competition_id), ('competition_category_id', '=', competition_category_id)]"/>
+            <field name="athlete_id" readonly="1"/>
+          </group>
+
+          <group string="Detalles de la Prueba">
             <field name="test_date"/>
             <field name="result"/>
             <field name="substance"/>
@@ -71,4 +78,5 @@
       (0, 0, {'view_mode': 'form', 'view_id': ref('view_iwf_antidoping_test_form')})
     ]"/>
   </record>
+
 </odoo>

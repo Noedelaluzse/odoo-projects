@@ -9,6 +9,8 @@
       <list string="Resultados">
         <field name="athlete_id"/>
         <field name="participation_id"/>
+        <field name="competition_id"/>
+        <field name="competition_category_id"/>
         <field name="total"/>
         <field name="medal"/>
         <field name="position"/>
@@ -28,6 +30,8 @@
           <group>
             <field name="athlete_id" readonly="1"/>
             <field name="participation_id"/>
+            <field name="competition_id" readonly="1"/>
+            <field name="competition_category_id" readonly="1"/>
             <field name="position"/>
             <field name="medal"/>
             <field name="disqualified"/>
@@ -81,6 +85,8 @@
         <field name="disqualified"/>
         <field name="position"/>
         <field name="tie_breaker_applied"/>
+        <field name="competition_id"/>
+        <field name="competition_category_id"/>
         <filter name="gold_filter" string="Medalla de Oro" domain="[('medal','=','gold')]"/>
       </search>
     </field>

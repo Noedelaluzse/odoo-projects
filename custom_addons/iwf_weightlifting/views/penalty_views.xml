@@ -14,14 +14,14 @@
           </group>
 
           <group string="Información Relacionada">
-            <field name="athlete_id"/>
             <field name="competition_id"/>
-            <field name="participation_id"/>
-            <field name="lift_attempt_id">
-              <tree_invisible>
-                <modifier name="invisible" eval="record.type.raw_value !== 'technical'"/>
-              </tree_invisible>
-            </field>
+            <field name="competition_category_id"
+                   domain="[('competition_id', '=', competition_id)]"/>
+            <field name="participation_id"
+                   domain="[('competition_id', '=', competition_id), ('competition_category_id', '=', competition_category_id)]"/>
+            <field name="athlete_id" readonly="1"/>
+
+            <field name="lift_attempt_id" if="record.show_lift_attempt"/>
           </group>
 
           <group string="Registro">
