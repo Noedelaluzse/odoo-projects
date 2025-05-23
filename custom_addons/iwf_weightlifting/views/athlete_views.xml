@@ -25,10 +25,6 @@
       <form string="Atleta">
         <sheet>
           <group>
-            <field name="internal_id" readonly="1"/>
-            <field name="athlete_code" readonly="1"/>
-          </group>
-          <group>
             <field name="name"/>
             <field name="birth_date"/>
             <field name="gender"/>

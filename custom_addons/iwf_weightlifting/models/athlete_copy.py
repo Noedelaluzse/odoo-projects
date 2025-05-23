@@ -9,10 +9,18 @@ class IwfAthlete(models.Model):
     _order = 'name'  # Orden por defecto en listas
 
     # Identificador técnico único generado automáticamente por secuencia
-    #internal_id = fields.Char(string='ID Interno', readonly=True, copy=False, default=lambda self: self.env['ir.sequence'].next_by_code('iwf.athlete.internal'))
+    internal_id = fields.Char(
+        string='ID Interno',
+        readonly=True,
+        copy=False
+    )
 
     # Código legible y público para eventos, generado automáticamente
-    #athlete_code = fields.Char(string='Código Público', readonly=True, copy=False, default=lambda self: self.env['ir.sequence'].next_by_code('iwf.athlete.code'))
+    athlete_code = fields.Char(
+        string='Código Público',
+        readonly=True,
+        copy=False
+    )
 
     # Nombre completo del atleta
     name = fields.Char(string='Nombre', required=True)
@@ -55,16 +63,25 @@ class IwfAthlete(models.Model):
 
     # Estado de actividad del atleta en el sistema
     active = fields.Boolean(string='Activo', default=True)
-    
+
+    # Relación con sanciones
     penalty_ids = fields.One2many(
         'iwf.penalty',
         'athlete_id',
         string='Sanciones'
     )
+
     # Restricción para que el código público sea único en toda la base de datos
-    # _sql_constraints = [
-    #     ('code_unique', 'unique(athlete_code)', 'El código público del atleta debe ser único.')
-    # ]
+    _sql_constraints = [
+        ('code_unique', 'unique(athlete_code)', 'El código público del atleta debe ser único.')
+    ]
+
+    # FORZAR la generación de secuencias si no fueron asignadas por defecto (cuando se crea el atleta)
+    @api.model
+    def create(self, vals):
+        vals['internal_id'] = vals.get('internal_id') or self.env['ir.sequence'].next_by_code('iwf.athlete.internal')
+        vals['athlete_code'] = vals.get('athlete_code') or self.env['ir.sequence'].next_by_code('iwf.athlete.code')
+        return super().create(vals)
 
     # Cálculo de edad en base al año actual y el año de nacimiento
     @api.depends('birth_date')
@@ -78,26 +95,23 @@ class IwfAthlete(models.Model):
     @api.depends('birth_date')
     def _compute_age_category(self):
         for record in self:
-            age = record.age  # Se usa la edad previamente calculada
+            age = record.age
             if age and record.gender:
-                # Dominio para buscar categorías válidas con o sin límite superior
                 domain = [
                     ('min_age', '<=', age),
                     '|',
                     ('max_age', '>=', age),
-                    ('max_age', '=', False),  # Incluye categorías sin tope (ej. Senior)
-                    ('active', '=', True)  # Solo categorías activas
+                    ('max_age', '=', False),
+                    ('active', '=', True)
                 ]
-                matched = self.env['iwf.age_group'].search(domain)  # Búsqueda
+                matched = self.env['iwf.age_group'].search(domain)
                 if matched:
-                    record.age_category_id = matched[0].id  # Asignar la primera coincidencia
-                    # Si es máster, genera el texto visible del bloque (ej. 35–39)
+                    record.age_category_id = matched[0].id
                     if matched[0].is_master:
                         lower = matched[0].min_age
                         upper = matched[0].max_age or lower + 4
                         record.master_group = f"{lower}–{upper}"
                 else:
-                    # Si no hay coincidencia, limpia los campos
                     record.age_category_id = False
                     record.master_group = False
 
@@ -105,18 +119,15 @@ class IwfAthlete(models.Model):
     @api.depends('weight', 'gender')
     def _compute_weight_category(self):
         for record in self:
-            # Requiere peso, género y grupo de edad para evaluar
             if not (record.weight and record.gender and record.age_category_id):
                 record.weight_category_id = False
                 continue
-
-            # Dominio para buscar la categoría de peso válida
             domain = [
-                ('rule_set_id', '=', record.age_category_id.rule_set_id.id),  # Mismo rule_set
-                ('gender', '=', record.gender),  # Mismo género
+                ('rule_set_id', '=', record.age_category_id.rule_set_id.id),
+                ('gender', '=', record.gender),
                 ('min_weight', '<=', record.weight),
                 ('max_weight', '>=', record.weight),
                 ('active', '=', True)
             ]
-            matched = self.env['iwf.weight_category'].search(domain, limit=1)  # Búsqueda
-            record.weight_category_id = matched.id if matched else False  # Asignar si existe
+            matched = self.env['iwf.weight_category'].search(domain, limit=1)
+            record.weight_category_id = matched.id if matched else False
