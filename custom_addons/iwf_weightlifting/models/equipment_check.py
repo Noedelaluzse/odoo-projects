@@ -82,11 +82,12 @@ class IwfEquipmentCheck(models.Model):
     def _onchange_category(self):
         self.participation_id = False
 
-    @api.model
-    def create(self, vals):
-        record = super().create(vals)
-        if not record.approved and record.notes:
-            if 'crítica' in record.notes.lower():
-                # Aquí podría ir lógica futura para crear una sanción automáticamente
-                pass
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for record in records:
+            if not record.approved and record.notes:
+                if 'crítica' in record.notes.lower():
+                    # lógica futura (sanción automática, etc)
+                    pass
+        return records

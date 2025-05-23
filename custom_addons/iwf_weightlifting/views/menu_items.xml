@@ -24,5 +24,5 @@
     <menuitem id="menu_iwf_weight_category_list" name="Categorías de Peso" parent="menu_iwf_config_root" action="action_iwf_weight_category"/>
 
     <!-- Dashboard -->
-    <menuitem id="menu_iwf_dashboard_organizer" name="Dashboard del Organizador" parent="menu_iwf_root" sequence="5" action="action_iwf_weightlifting_dashboard_organize" groups="iwf_weightlifting.group_iwf_organizer"/>
+    <menuitem id="menu_iwf_dashboard_organizer" name="Dashboard del Organizador" parent="menu_iwf_root" sequence="5" action="action_iwf_weightlifting_dashboard_organizer" groups="iwf_weightlifting.group_iwf_organizer"/>
 </odoo>

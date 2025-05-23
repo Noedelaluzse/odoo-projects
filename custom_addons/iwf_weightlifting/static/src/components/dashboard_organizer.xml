@@ -1,92 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
   <t t-name="iwf_weightlifting.DashboardOrganizer" owl="1">
-    <div class="vh-100 overflow-auto bg-muted">
+    <div class="vh-100 overflow-auto bg-light">
       <div class="row m-3">
         <div class="col-lg-7">
+          <!-- Selección de competencia -->
           <div class="row">
             <div class="col m-0 p-0">
               <div class="shadow-sm border m-2 p-4 bg-white">
                 <div class="d-flex align-items-center justify-content-between">
-                  <h1 class="text-primary fw-bold">
-                    Dashboard
-                  </h1>
+                  <h1 class="text-primary fw-bold">Competition Dashboard</h1>
                   <div>
-                    <select name="" id="" class="form-select" t-model="state.period" t-on-change="onChangePeriod">
-                      <option value="0">Select Period</option>
-                      <option value="7">Last 7 Days</option>
-                      <option value="30">Last 30 Days</option>
-                      <option value="90">Last 90 Days</option>
-                      <option value="365">Last 365 Days</option>
+                    <select class="form-select" t-on-change="onChangeCompetition">
+                      <option value="">Select Competition</option>
+                      <t t-foreach="state.competitions" t-as="comp" t-key="comp.id">
+                        <option t-att-value="comp.id" t-att-selected="comp.id === state.selectedCompetitionId">
+                          <t t-esc="comp.name"/>
+                        </option>
+                      </t>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- KPIs -->
           <div class="row">
-            <KpiCard onClick.bind="viewQuotations" name="'Quotations'" value="state.quotations.value" percentage="state.quotations.percentage"/>
-            <KpiCard onClick.bind="viewOrders" name="'Orders'" value="state.orders.value" percentage="state.orders.percentage"/>
-            <KpiCard onClick.bind="viewRevenues"  name="'Revenues'" value="state.orders.revenue" percentage="state.orders.revenue_percentage"/>
-            <KpiCard onClick.bind="viewRevenues"   name="'Average Orders'" value="state.orders.average" percentage="state.orders.average_percentage"/>
+            <KpiCard name="'Total Athletes'" value="state.kpi.total_athletes" percentage="false" onClick.bind="viewAthletes"/>
+            <KpiCard name="'Valid Attempts'" value="state.kpi.valid_lifts" percentage="false" onClick.bind="viewLifts"/>
+            <KpiCard name="'Total Penalties'" value="state.kpi.total_penalties" percentage="false" onClick.bind="viewPenalties"/>
+            <KpiCard name="'Total Medals'" value="state.kpi.total_medals" percentage="false" onClick.bind="viewMedals"/>
           </div>
+
+          <!-- Charts -->
           <div class="row">
             <div class="col-lg-6 m-0 p-0">
               <div class="shadow-sm border m-2 p-4 bg-white">
-                <div class="d-flex align-items-center justify-content-between">
-                  <h3 class="text-primary fw-bold">
-                    Top Products
-                  </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="viewTopProducts">
-                    <span class="fa fa-arrow-right text-white" />
-                  </div>
-                </div>
-                <ChartRender type="'doughnut'" title="'Top Products Report'"/>
+                <h3 class="text-primary fw-bold">Athletes by Gender</h3>
+                <ChartRender type="'doughnut'" title="'Athletes by Gender'" data="state.charts.athletesByGender"/>
               </div>
             </div>
             <div class="col-lg-6 m-0 p-0">
               <div class="shadow-sm border m-2 p-4 bg-white">
-                <div class="d-flex align-items-center justify-content-between">
-                  <h3 class="text-primary fw-bold">
-                    Top Sales People
-                  </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer"  t-on-click="viewTopSales">
-                    <span class="fa fa-arrow-right text-white" />
-                  </div>
-                </div>
-               <ChartRender type="'pie'" title="'Top Sales People Report'"/>
+                <h3 class="text-primary fw-bold">Valid vs Invalid Lifts</h3>
+                <ChartRender type="'bar'" title="'Valid vs Invalid Lifts'" data="state.charts.validInvalidLifts"/>
               </div>
-            </div>               
+            </div>
           </div>
         </div>
+
         <div class="col-lg-5">
           <div class="row">
             <div class="col m-0 p-0">
               <div class="shadow-sm border m-2 p-4 bg-white">
-                <div class="d-flex align-items-center justify-content-between">
-                  <h3 class="text-primary fw-bold">
-                    Monthly Sales
-                  </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="viewMonthlySales">
-                    <span class="fa fa-arrow-right text-white" />
-                  </div>
-                </div>
-                <ChartRender type="'bar'" title="'Monthly Sales Report'" />
+                <h3 class="text-primary fw-bold">Medals by Country</h3>
+                <ChartRender type="'pie'" title="'Medals by Country'" data="state.charts.medalsByCountry"/>
               </div>
             </div>            
           </div>
           <div class="row">
             <div class="col m-0 p-0">
               <div class="shadow-sm border m-2 p-4 bg-white">
-                <div class="d-flex align-items-center justify-content-between">
-                  <h3 class="text-primary fw-bold">
-                    Partners Orders
-                  </h3>
-                  <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="viewPartnerOrders">
-                    <span class="fa fa-arrow-right text-white" />
-                  </div>
-                </div>
-               <ChartRender type="'line'" title="'Partners Orders Report'"/>
+                <h3 class="text-primary fw-bold">Penalties by Type</h3>
+                <ChartRender type="'bar'" title="'Penalties by Type'" data="state.charts.penaltiesByType"/>
               </div>
             </div>            
           </div>

@@ -94,12 +94,12 @@ class IwfParticipation(models.Model):
         )
     ]
 
-    @api.model
-    def create(self, vals):
-        """Asigna un número de sorteo aleatorio si no se proporciona."""
-        if not vals.get('lot_number'):
-            vals['lot_number'] = random.randint(1, 999)
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('lot_number'):
+                vals['lot_number'] = random.randint(1, 999)
+        return super().create(vals_list)
 
     @api.constrains('weight_in', 'competition_category_id')
     def _check_weight_in_range(self):

@@ -9,7 +9,8 @@
     'license': 'LGPL-3',
     'depends': [
         'base',
-        'contacts'
+        'contacts',
+        'web',
     ],
     'data': [
         # Seguridad primero
@@ -39,11 +40,16 @@
         'views/menu_items.xml',
     ],
     'assets': {
-        'web.assets_backend': [
-            'iwf_weightlifting/static/src/components/**/*.js',
-            'iwf_weightlifting/static/src/components/**/*.xml',
-            'iwf_weightlifting/static/src/components/**/*.scss',
-        ],
+    'web.assets_backend': [
+        'web._assets_primary_variables',
+        'web._assets_backend_helpers',
+        'web._assets_core',
+        'web.assets_backend',
+
+        # Tus archivos JS/XML
+        'iwf_weightlifting/static/src/components/**/*.js',
+        'iwf_weightlifting/static/src/components/**/*.xml',
+    ],
     },
     'installable': True,
     'application': True,

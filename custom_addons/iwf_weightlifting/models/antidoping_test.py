@@ -82,20 +82,18 @@ class IwfAntidopingTest(models.Model):
     def _onchange_competition_category_id(self):
         self.participation_id = False
 
-    @api.model
-    def create(self, vals):
-        record = super().create(vals)
-
-        # Crear sanción automática si resultado positivo
-        if record.result == 'positive':
-            self.env['iwf.penalty'].create({
-                'competition_id': record.competition_id.id,
-                'competition_category_id': record.competition_category_id.id,
-                'participation_id': record.participation_id.id,
-                'type': 'doping',
-                'reason': 'Resultado positivo en antidopaje',
-                'details': f"Sustancia detectada: {record.substance or 'No especificada'}",
-                'applied_by': self.env.uid,
-            })
-
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for record in records:
+            if record.result == 'positive':
+                record.env['iwf.penalty'].create({
+                    'competition_id': record.competition_id.id,
+                    'competition_category_id': record.competition_category_id.id,
+                    'participation_id': record.participation_id.id,
+                    'type': 'doping',
+                    'reason': 'Resultado positivo en antidopaje',
+                    'details': f"Sustancia detectada: {record.substance or 'No especificada'}",
+                    'applied_by': record.env.uid,
+                })
+        return records
